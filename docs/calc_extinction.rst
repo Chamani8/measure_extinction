@@ -150,9 +150,9 @@ and clearly shows the 2175 A absorption feature.
    ax.set_title('HD229238 (reddened) & HD204172 (comparison)')
    ax.set_yscale('log')
    ax.set_xscale('log')
-   ax.set_ylim(1e-17, 1e-9)
-   ax.set_xlabel('$\lambda$ [$\mu m$]')
-   ax.set_ylabel('$F(\lambda)$ [$ergs\ cm^{-2}\ s^{-1}\ \AA^{-1}$]')
+   ax.set_ylim(1e-17, 1e-8)
+   ax.set_xlabel(r'$\lambda$ [$\mu m$]')
+   ax.set_ylabel(r'$F(\lambda)$ [$ergs\ cm^{-2}\ s^{-1}\ \AA^{-1}$]')
    ax.tick_params('both', length=10, width=2, which='major')
    ax.tick_params('both', length=5, width=1, which='minor')
 
@@ -305,23 +305,13 @@ The value for the K band extinction is given in Table 3 of this reference as
    A(V) = -1.126 E(K-V)
 
 The :class:`~measure_extinction.extdata.ExtData` member function trans_elv_alav
-performs this normalization.  Other choices for :math:`A(K)/A(V)` can be used
-by setting the parameter `akav` in this member function.
-
-.. code-block:: python
-
-   # value from Rieke & Lebofsky (1985)
-   extdata.trans_elv_alav(akav=0.112)
-
-   # use value for van de Hulst No. 15 curve instead
-   extdata.trans_elv_alav(akav=0.0885)
+performs this normalization.  
 
 .. plot::
 
    import pkg_resources
+   import matplotlib.pyplot as plt
    import copy
-
-   import numpy as np
 
    from measure_extinction.stardata import StarData
    from measure_extinction.extdata import ExtData
@@ -343,20 +333,20 @@ by setting the parameter `akav` in this member function.
 
    # divide by the A(V) derived with two different A(K)/A(V) assumptions
    extdata.trans_elv_alav(akav=0.112)
-   extdata2.trans_elv_alav(akav=0.0885)
+   # extdata2.trans_elv_alav(akav=0.0885)
 
    # start the plotting
    fig, ax = plt.subplots()
 
    # plot the bands and all spectra for this star
    extdata.plot(ax, color='b')
-   extdata2.plot(ax, color='g')
+   # extdata2.plot(ax, color='g')
 
    # finish configuring the plot
    ax.set_title('HD229238/HD204172 extinction')
    ax.set_xscale('log')
-   ax.set_xlabel('$\lambda$ [$\mu m$]')
-   ax.set_ylabel('$A(\lambda)/A(V)$')
+   ax.set_xlabel(r'$\lambda$ [$\mu m$]')
+   ax.set_ylabel(r'$A(\lambda)/A(V)$')
    ax.tick_params('both', length=10, width=2, which='major')
    ax.tick_params('both', length=5, width=1, which='minor')
 
@@ -364,13 +354,25 @@ by setting the parameter `akav` in this member function.
    from matplotlib.lines import Line2D
    custom_lines = [Line2D([0], [0], color='b', lw=4),
                    Line2D([0], [0], color='g', lw=4)]
-   ax.legend(custom_lines, ['A(K)/A(V): Reike & Lebofsky (1985)',
-                            'A(K)/A(V): van de Hulst No. 15'])
+   # ax.legend(custom_lines, ['A(K)/A(V): Reike & Lebofsky (1985)',
+   #                          'A(K)/A(V): van de Hulst No. 15'])
+   ax.legend(custom_lines, ['A(K)/A(V): Reike & Lebofsky (1985)'])
 
    # use the whitespace better
    fig.tight_layout()
 
    plt.show()
+
+Other choices for :math:`A(K)/A(V)` can be used by setting the parameter `akav` in this member function.
+
+.. code-block:: python
+
+   # value from Rieke & Lebofsky (1985)
+   extdata.trans_elv_alav(akav=0.112)
+
+   # use value for van de Hulst No. 15 curve instead
+   extdata.trans_elv_alav(akav=0.0885)
+
 
 Comparison to Models
 ^^^^^^^^^^^^^^^^^^^^
