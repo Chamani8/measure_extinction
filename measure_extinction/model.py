@@ -434,8 +434,11 @@ class MEModel(object):
             if self.fore_sampling:
                 tRv = self.rng.normal(loc=self.fore_Rv.prior[0], scale=self.fore_Rv.prior[1])
                 tRv = max(self.fore_Rv.bounds[0], min(tRv, self.fore_Rv.bounds[1]))
+                tAv = self.rng.normal(loc=self.fore_Av.prior[0], scale=self.fore_Av.prior[1])
+                tAv = max(self.fore_Av.bounds[0], min(tAv, self.fore_Av.bounds[1]))
             else:
                 tRv = self.fore_Rv.value
+                tAv = self.fore_Av.value
             g23mod = G23(Rv=tRv)
 
         sed = {}
@@ -461,11 +464,6 @@ class MEModel(object):
 
             if self.fore_Av.value > 0.0:
                 axav = g23mod(moddata.waves[cspec])
-                if self.fore_sampling:
-                    tAv = self.rng.normal(loc=self.fore_Av.prior[0], scale=self.fore_Av.prior[1])
-                    tAv = max(self.fore_Av.bounds[0], min(tAv, self.fore_Av.bounds[1]))
-                else:
-                    tAv = self.fore_Av.value
                 sed[cspec] = sed[cspec] * (10 ** (-0.4 * axav * tAv))
 
             # remove bands not int he observed data
