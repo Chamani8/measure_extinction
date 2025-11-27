@@ -1016,6 +1016,14 @@ class MEModel(object):
         plt.rc("ytick.major", width=2)
         plt.rc("ytick.minor", width=2)
 
+        grating_info = {"STIS_G140L": "indigo",
+                        "STIS_G230L": "violet",
+                        "STIS_G430L": "blue",
+                        "STIS_G750L": "green",
+                        "WFC3_G102": "orange",
+                        "WFC3_G141": "orangered",
+                        "MODEL_FULL_LOWRES": "black"}
+
         # setup the plot
         if lyaplot:
             ncols = 2
@@ -1061,10 +1069,14 @@ class MEModel(object):
         for cspec in obsdata.data.keys():
             if cspec == "BAND":
                 ptype = "o"
-                rcolor = "k"
+                rmarker = "o"
+                rcolor = "cyan"
+                mline = "none"
             else:
                 ptype = "-"
-                rcolor = "k"
+                mline = "-"
+                rmarker = "none"
+                rcolor = grating_info[cspec]
 
             if cspec == "BAND":
                 cwaves = obsdata.data[cspec].waves
@@ -1153,14 +1165,18 @@ class MEModel(object):
                     cwaves[gvals],
                     diff,
                     yerr=uncs,
-                    fmt=rcolor + ptype,
+                    color=rcolor,
+                    marker=rmarker,
+                    linestyle=mline,
                     alpha=0.2,
                 )
                 cax.errorbar(
                     cwaves[gvals] * nvals,
                     diff * nvals,
                     yerr=uncs,
-                    fmt=rcolor + ptype,
+                    color=rcolor,
+                    marker=rmarker,
+                    linestyle=mline,
                     alpha=calpha,
                 )
 
