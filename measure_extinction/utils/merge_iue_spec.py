@@ -2,7 +2,7 @@ import argparse
 
 # from astropy.table import Table
 
-# from measure_extinction.merge_obsspec import merge_iue_obsspec
+from measure_extinction.merge_obsspec import merge_iue_obsspec
 
 
 if __name__ == "__main__":
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # use_small capability needed
     # recalibration by Massa & Fitzpatrick IDL code needs to be recoded in python
 
-    # iue_mergespec = merge_iue_obsspec(stable)
+    iue_mergespec = merge_iue_obsspec(stable)
     if args.outname:
         outname = args.outname
     else:
