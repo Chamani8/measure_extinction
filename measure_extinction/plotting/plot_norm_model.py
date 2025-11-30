@@ -29,13 +29,15 @@ def main():
     parser.add_argument("--pdf", help="save figure as a pdf file", action="store_true")
     args = parser.parse_args()
 
-    grating_info = {"STIS_G140L": "indigo",
-                    "STIS_G230L": "violet",
-                    "STIS_G430L": "blue",
-                    "STIS_G750L": "green",
-                    "WFC3_G102": "orange",
-                    "WFC3_G141": "orangered",
-                    "MODEL_FULL_LOWRES": "black"}
+    grating_info = {
+        "STIS_G140L": "indigo",
+        "STIS_G230L": "violet",
+        "STIS_G430L": "blue",
+        "STIS_G750L": "green",
+        "WFC3_G102": "orange",
+        "WFC3_G141": "orangered",
+        "MODEL_FULL_LOWRES": "black",
+    }
 
     # plotting setup for easier to read plots
     fontsize = 12
@@ -255,14 +257,14 @@ def main():
                 cax.errorbar(
                     reddened_star.data[cspec].waves[gvals],
                     reddened_star.data[cspec].fluxes[gvals],
-                    #yerr=reddened_star.data[cspec].uncs[gvals],
+                    # yerr=reddened_star.data[cspec].uncs[gvals],
                     color=rcolor,
                     marker=rmarker,
                     linestyle=mline,
                     alpha=calpha,
                     mfc=fcolor,
                     markersize=markersize,
-                    label=f"Data: {cspec}"
+                    label=f"Data: {cspec}",
                 )
 
     axes[0].set_xlim(0.11, 0.38)
@@ -292,7 +294,7 @@ def main():
 
     axes[0].set_title((reddened_star.file).replace(".dat", ""), fontsize=fontsize)
 
-    axes[0].legend(fontsize=0.7*fontsize, ncol=2)
+    axes[0].legend(fontsize=0.7 * fontsize, ncol=2)
 
     save_str = "_mefit_mcmc_norm"
 
