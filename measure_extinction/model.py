@@ -81,8 +81,12 @@ class MEModel(object):
 
     # foreground MW dust parameters (when used, set based on HI and parameters fixed)
     # used to account MW foreground dust extinction when measuring extinction in external galaxies
-    fore_Av = MEParameter(value=0.0, bounds=(0.0, 1.0), fixed=True)
-    fore_Rv = MEParameter(value=3.1, bounds=(2.3, 5.6), fixed=True)
+    fore_Av = MEParameter(value=0.0, bounds=(0.0, 10.0), fixed=True)
+    fore_Rv = MEParameter(value=3.1, bounds=(2.3, 5.6), prior=(3.0, 0.4), fixed=True)
+    # set to true if campling (e.g., MCMC) to enable sampling the foreground prior
+    fore_sampling = False
+    # needed for fore_sampling
+    rng = np.random.default_rng(123456)
 
     # normalization value (puts model at the same level as data)
     #   value is depends on the stellar radius and distance
@@ -427,7 +431,15 @@ class MEModel(object):
         weights /= np.sum(weights)
 
         if self.fore_Av.value > 0.0:
-            g23mod = G23(Rv=self.fore_Rv.value)
+            if self.fore_sampling:
+                tRv = self.rng.normal(loc=self.fore_Rv.prior[0], scale=self.fore_Rv.prior[1])
+                tRv = max(self.fore_Rv.bounds[0], min(tRv, self.fore_Rv.bounds[1]))
+                tAv = self.rng.normal(loc=self.fore_Av.prior[0], scale=self.fore_Av.prior[1])
+                tAv = max(self.fore_Av.bounds[0], min(tAv, self.fore_Av.bounds[1]))
+            else:
+                tRv = self.fore_Rv.value
+                tAv = self.fore_Av.value
+            g23mod = G23(Rv=tRv)
 
         sed = {}
         for cspec in moddata.fluxes.keys():
@@ -452,7 +464,7 @@ class MEModel(object):
 
             if self.fore_Av.value > 0.0:
                 axav = g23mod(moddata.waves[cspec])
-                sed[cspec] = sed[cspec] * (10 ** (-0.4 * axav * self.fore_Av.value))
+                sed[cspec] = sed[cspec] * (10 ** (-0.4 * axav * tAv))
 
             # remove bands not int he observed data
             if (cspec == "BAND") and (self.obsdata_bands is not None):
@@ -1004,6 +1016,14 @@ class MEModel(object):
         plt.rc("ytick.major", width=2)
         plt.rc("ytick.minor", width=2)
 
+        grating_info = {"STIS_G140L": "indigo",
+                        "STIS_G230L": "violet",
+                        "STIS_G430L": "blue",
+                        "STIS_G750L": "green",
+                        "WFC3_G102": "orange",
+                        "WFC3_G141": "orangered",
+                        "MODEL_FULL_LOWRES": "black"}
+
         # setup the plot
         if lyaplot:
             ncols = 2
@@ -1049,10 +1069,14 @@ class MEModel(object):
         for cspec in obsdata.data.keys():
             if cspec == "BAND":
                 ptype = "o"
-                rcolor = "k"
+                rmarker = "o"
+                rcolor = "cyan"
+                mline = "none"
             else:
                 ptype = "-"
-                rcolor = "k"
+                mline = "-"
+                rmarker = "none"
+                rcolor = grating_info[cspec]
 
             if cspec == "BAND":
                 cwaves = obsdata.data[cspec].waves
@@ -1141,14 +1165,18 @@ class MEModel(object):
                     cwaves[gvals],
                     diff,
                     yerr=uncs,
-                    fmt=rcolor + ptype,
+                    color=rcolor,
+                    marker=rmarker,
+                    linestyle=mline,
                     alpha=0.2,
                 )
                 cax.errorbar(
                     cwaves[gvals] * nvals,
                     diff * nvals,
                     yerr=uncs,
-                    fmt=rcolor + ptype,
+                    color=rcolor,
+                    marker=rmarker,
+                    linestyle=mline,
                     alpha=calpha,
                 )
 
