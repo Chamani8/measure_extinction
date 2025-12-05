@@ -71,7 +71,7 @@ class MEModel(object):
     B3 = MEParameter(value=3.6, bounds=(-1.0, 8.0), prior=(3.6, 0.6))
     C4 = MEParameter(value=0.4, bounds=(-0.5, 1.5), prior=(0.4, 0.2))
     xo = MEParameter(value=4.59, bounds=(4.5, 4.9), prior=(4.59, 0.02))
-    gamma = MEParameter(value=0.89, bounds=(0.4, 1.7), prior=(0.89, 0.08))
+    gamma = MEParameter(value=0.89, bounds=(0.6, 1.7), prior=(0.89, 0.08))
 
     # gas
     vel_MW = MEParameter(value=0.0, bounds=(-300.0, 300.0))  # km/s
@@ -1076,7 +1076,10 @@ class MEModel(object):
                 ptype = "-"
                 mline = "-"
                 rmarker = "none"
-                rcolor = grating_info[cspec]
+                if cspec not in grating_info.keys():
+                    rcolor = "black"
+                else:
+                    rcolor = grating_info[cspec]
 
             if cspec == "BAND":
                 cwaves = obsdata.data[cspec].waves
