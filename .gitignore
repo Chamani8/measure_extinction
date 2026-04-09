@@ -64,3 +64,6 @@ distribute-*.tar.gz
 *.png
 *.p
 *.fits
+*.log
+*.pdf
+*.gz

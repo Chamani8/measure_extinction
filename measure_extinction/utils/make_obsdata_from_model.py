@@ -295,9 +295,12 @@ def make_obsdata_from_model(
     # determine which spectra to mock and output
     if specs == "all":
         # fmt: off
-        specs = ["MODEL_FULL_LOWRES", "MODEL_FULL", "IUE", "STIS", "IRS",
-                 "WFC3_G102", "WFC3_G141",
-                 "NIRISS_SOSS", "NIRCAM_SS", "MIRI_LRS", "MIRI_IFU"]
+        specs = [
+            "MODEL_FULL_LOWRES", "MODEL_FULL", "IUE", "STIS", "IRS",
+            "WFC3_G102", "WFC3_G141",
+            "NIRISS_SOSS", "NIRCAM_SS", "MIRI_LRS", "MIRI_IFU",
+            "GAIA_BP", "GAIA_RP",
+            ]
         # fmt: on
 
     # rebin to R=10000 for speed
@@ -555,4 +558,5 @@ if __name__ == "__main__":
         show_plot=True,
         # specs="all",
         # specs=["WFC3_G102", "WFC3_G141"],
+        specs=["GAIA_BP", "GAIA_RP"]
     )
