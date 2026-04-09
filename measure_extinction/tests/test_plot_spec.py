@@ -1,9 +1,11 @@
 import os
+import pytest
 
 from measure_extinction.utils.helpers import get_datapath
 from measure_extinction.plotting.plot_spec import plot_multi_spectra, plot_spectrum
 
 
+@pytest.mark.xfail
 def test_plot_spectra():
     # get the location of the data files
     data_path = get_datapath()

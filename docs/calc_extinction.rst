@@ -126,14 +126,13 @@ and clearly shows the 2175 A absorption feature.
 
 .. plot::
 
-   import pkg_resources
    import matplotlib.pyplot as plt
 
    from measure_extinction.stardata import StarData
+   from measure_extinction.utils.helpers import get_datapath
 
    # get the location of the data files
-   data_path = pkg_resources.resource_filename('measure_extinction',
-                                               'data/')
+   data_path = get_datapath()
 
    # read in the observed data of the stars
    redstar = StarData('hd229238.dat', path=data_path)
@@ -190,15 +189,14 @@ member function plot_ext.
 
 .. plot::
 
-   import pkg_resources
    import matplotlib.pyplot as plt
 
    from measure_extinction.stardata import StarData
    from measure_extinction.extdata import ExtData
+   from measure_extinction.utils.helpers import get_datapath
 
    # get the location of the data files
-   data_path = pkg_resources.resource_filename('measure_extinction',
-                                               'data/')
+   data_path = get_datapath()
 
    # read in the observed data of the stars
    redstar = StarData('hd229238.dat', path=data_path)
@@ -243,14 +241,14 @@ exists.
 
 .. plot::
 
-   import pkg_resources
    import matplotlib.pyplot as plt
 
    from measure_extinction.stardata import StarData
    from measure_extinction.extdata import ExtData
+   from measure_extinction.utils.helpers import get_datapath
 
    # get the location of the data files
-   data_path = pkg_resources.resource_filename("measure_extinction", "data/")
+   data_path = get_datapath()
 
    # read in the observed data on the star
    redstar = StarData("hd229238.dat", path=data_path)
@@ -309,16 +307,15 @@ performs this normalization.
 
 .. plot::
 
-   import pkg_resources
    import matplotlib.pyplot as plt
    import copy
 
    from measure_extinction.stardata import StarData
    from measure_extinction.extdata import ExtData
+   from measure_extinction.utils.helpers import get_datapath
 
    # get the location of the data files
-   data_path = pkg_resources.resource_filename('measure_extinction',
-                                               'data/')
+   data_path = get_datapath()
 
    # read in the observed data on the star
    redstar = StarData('hd229238.dat', path=data_path)

@@ -141,4 +141,5 @@ if __name__ == "__main__":
             output_path="/home/kgordon/Python/extstar_data",
             model_params=model_params,
             # specs=["IUE", "MIRI_LRS"],
+            specs=["GAIA_BP", "GAIA_RP"],
         )

@@ -312,7 +312,7 @@ def plot_multi_spectra(
 
     # show the figure or save it to a pdf file
     if pdf:
-        fig.savefig(path + outname, bbox_inches="tight")
+        fig.savefig(path + outname)  # , bbox_inches="tight")
     else:
         plt.show()
 

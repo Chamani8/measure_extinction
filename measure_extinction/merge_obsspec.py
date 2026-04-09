@@ -15,6 +15,8 @@ fluxunit = u.erg / (u.s * u.cm * u.cm * u.angstrom)
 # define the basic info for each type of spectra
 #   info for each entry is (resolution, wavelength_range)
 obsspecinfo = {
+    "gaia_bp": (70, [0.336, 0.643] * u.micron),
+    "gaia_rp": (70, [0.639, 1.021] * u.micron),
     "wfc3_g102": (210, [0.8, 1.15] * u.micron),
     "wfc3_g141": (130, [1.075, 1.70] * u.micron),
     "niriss_soss": (700, [0.85, 2.75] * u.micron),
