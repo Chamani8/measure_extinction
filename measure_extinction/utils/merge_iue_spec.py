@@ -2,7 +2,7 @@ import argparse
 
 # from astropy.table import Table
 
-from measure_extinction.merge_obsspec import merge_iue_obsspec
+# from measure_extinction.merge_obsspec import merge_iue_obsspec
 
 
 if __name__ == "__main__":

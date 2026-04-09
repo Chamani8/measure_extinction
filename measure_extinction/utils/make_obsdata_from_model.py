@@ -299,8 +299,7 @@ def make_obsdata_from_model(
             "MODEL_FULL_LOWRES", "MODEL_FULL", "IUE", "STIS", "IRS",
             "WFC3_G102", "WFC3_G141",
             "NIRISS_SOSS", "NIRCAM_SS", "MIRI_LRS", "MIRI_IFU",
-            "GAIA_BP", "GAIA_RP",
-            ]
+            "GAIA_BP", "GAIA_RP"]
         # fmt: on
 
     # rebin to R=10000 for speed
